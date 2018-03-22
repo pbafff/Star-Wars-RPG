@@ -1,2 +1,14 @@
 * {box-sizing: border-box;}
+main {
+    display: grid;
+    grid-template-rows: repeat(5, 1fr);
+    /* grid-template-columns: repeat(6, 1fr); */
+    margin: 2rem;
+
+}
+.character {
+    display: inline-block;
+    /* grid-row: 1 / 2;
+    grid-column: 1 / 6; */
+}
 
