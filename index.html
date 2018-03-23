@@ -12,22 +12,22 @@
 <body>
     <main>
         <div class="character-select">
-            <div class="character jedi" id="Luke" data-hp-total="100" data-hp-value="100" data-attack="10">
+            <div class="character jedi" id="Luke" data-hp-total="100" data-hp-value="100" data-attack="10" data-speed="12" data-moves='{"move1":"saberStrike", "move2":"forceFocus"}'>
                 <h3>Luke Skywalker</h3>
                 <img src="./assets/images/Luke.jpg" width="200">
             </div>
 
-            <div class="character jedi" id="Obi-Wan" data-hp-total="120" data-hp-value="120">
+            <div class="character jedi" id="Obi-Wan" data-hp-total="120" data-hp-value="120" data-attack="13" data-speed="13">
                 <h3>Obi-Wan Kenobi</h3>
                 <img src="./assets/images/Obi-Wan.jpg" width="200">
             </div>
 
-            <div class="character sith" id="Maul" data-hp-total="150" data-hp-value="150">
+            <div class="character sith" id="Maul" data-hp-total="150" data-hp-value="150" data-attack="12" data-speed="14">
                 <h3>Darth Maul</h3>
                 <img src="./assets/images/Maul.jpg" width="200">
             </div>
 
-            <div class="character sith" id="Sidious" data-hp-total="180" data-hp-value="180">
+            <div class="character sith" id="Sidious" data-hp-total="180" data-hp-value="180" data-attack="15" data-speed="15">
                 <h3>Darth Sidious</h3>
                 <img src="./assets/images/Sidious.png" width="200">
             </div>
@@ -53,7 +53,10 @@
             </div>
         </div>
 
-        <div class="attackBtn"></div>
+        <div class="attackPanel">
+            <div id="slot1"></div>
+            <div id="slot2"></div>
+        </div>
 
     </main>
 
