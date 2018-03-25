@@ -130,7 +130,9 @@ $(document).ready(function () {
 
     function whoGoesFirst() {
         if (playerSpeed > enemySpeed) {
-            
+            if () {
+                
+            }
         }
     }
 
