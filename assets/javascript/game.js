@@ -1,6 +1,10 @@
 $(document).ready(function () {
-    var playerChar, enemyChar, playerAtk, enemyAtk, playerSpeed, enemySpeed, enemyMove, playerCurrentHP, enemyCurrentHP;
+    var fates, playerChar, enemyChar, playerAtk, enemyAtk, playerSpeed, enemySpeed, enemyMove, playerCurrentHP, enemyCurrentHP;
     var mArray = [];
+    var lightsaberNoises = ['http://www.soundboard.com/handler/DownLoadTrack.ashx?cliptitle=clash+clash+twirl&filename=22/228946-89256964-88ce-460e-98d5-7e9e64812844.mp3', 'http://www.soundboard.com/handler/DownLoadTrack.ashx?cliptitle=5+clash+2&filename=22/228946-29a49c17-d7e8-4fb1-a657-fd2ce2d4d18e.mp3', 'http://www.soundboard.com/handler/DownLoadTrack.ashx?cliptitle=4+Clash+good&filename=22/228946-a3ef5ba9-a1c2-403b-82d9-41bce0b4bc4e.mp3', 'http://www.soundboard.com/handler/DownLoadTrack.ashx?cliptitle=4+clash+2&filename=22/228946-07dd54bb-8cb1-4d20-ae85-87de335c1f56.mp3', 'http://www.soundboard.com/handler/DownLoadTrack.ashx?cliptitle=3+clash+1&filename=22/228946-c42aa303-0853-48ff-b827-d14953453493.mp3', 'http://www.soundboard.com/handler/DownLoadTrack.ashx?cliptitle=2+clash&filename=22/228946-d7bffcd7-133d-4d0e-9ebc-5ef7d8102f3a.mp3'];
+    saberRegEx = /saber/;
+    var saberOn = new Audio('http://www.soundboard.com/handler/DownLoadTrack.ashx?cliptitle=SaberOn&filename=22/228946-af74bc36-4d8c-46db-a096-262b7fa25761.mp3');
+    var saberOn2 = new Audio ('http://www.soundboard.com/handler/DownLoadTrack.ashx?cliptitle=sw4-lightsabre&filename=22/228946-a71b9c11-1014-4959-8882-4d87088baeaa.mp3');
     var playerBool = true;
     var enemyBool = true;
     $(".attackPanel").hide();
@@ -13,16 +17,25 @@ $(document).ready(function () {
             $("#slot1").html("<p>" + thiS.data('moves').move1 + "</p>").hide();
             $("#slot2").html("<p>" + thiS.data('moves').move2 + "</p>").hide();
             thiS.children('p').html(thiS.data('hpValue'));
+            saberOn2.play();
             playerBool = false;
             console.log(thiS.data('hpValue'));
         }
         if (playerBool === false && enemyBool === false) {
             $("#slot1").click(function () {
                 isAtkOrSpecial($(this).text());
+                if (saberRegEx.test($(this).text())) {
+                    var randSaberNoise = new Audio(lightsaberNoises[Math.floor(Math.random() * lightsaberNoises.length)]);
+                    randSaberNoise.play();
+                }
                 console.log($(this).text())
             });
             $("#slot2").click(function () {
                 isAtkOrSpecial($(this).text());
+                if (saberRegEx.test($(this).text())) {
+                    var randSaberNoise = new Audio(lightsaberNoises[Math.floor(Math.random() * lightsaberNoises.length)]);
+                    randSaberNoise.play();
+                }
                 console.log($(this).text())
             });
         }
@@ -44,6 +57,9 @@ $(document).ready(function () {
             $(".attackPanel").show(2500);
             $("#slot1").show(4000);
             $("#slot2").show(4000);
+            fates = new Audio("https://archive.org/download/StarWarsJohnWilliamsDuelOfTheFates_201601/Star%20Wars%20-%20John%20Williams%20-%20Duel%20Of%20The%20Fates.mp3");
+            saberOn.play();
+            fates.play();
             console.log(thiS.data('hpValue'));
         }
     });
@@ -71,19 +87,21 @@ $(document).ready(function () {
         },
         forceConfusion: {
             amount: 3,
-            type: "speed",
+            type: "speedmod",
             target: "opponent",
         },
 
     };
-    function pickEnemyMove() { enemyMove = mArray[Math.floor(Math.random() * mArray.length)] };
+    function pickEnemyMove() { 
+        enemyMove = mArray[Math.floor(Math.random() * mArray.length)];
+    };
 
     function isAtkOrSpecial(move) {
         if (gameMoves[move].type === "attack") {
             playerDamageCalc(move);
 
 
-        } else if (gameMoves[move].type === "speed") {
+        } else if (gameMoves[move].type === "speedmod") {
 
         }
     }
