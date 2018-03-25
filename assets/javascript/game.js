@@ -2,9 +2,11 @@ $(document).ready(function () {
     var fates, playerChar, enemyChar, playerAtk, enemyAtk, playerSpeed, enemySpeed, enemyMove, playerCurrentHP, enemyCurrentHP;
     var mArray = [];
     var lightsaberNoises = ['http://www.soundboard.com/handler/DownLoadTrack.ashx?cliptitle=clash+clash+twirl&filename=22/228946-89256964-88ce-460e-98d5-7e9e64812844.mp3', 'http://www.soundboard.com/handler/DownLoadTrack.ashx?cliptitle=5+clash+2&filename=22/228946-29a49c17-d7e8-4fb1-a657-fd2ce2d4d18e.mp3', 'http://www.soundboard.com/handler/DownLoadTrack.ashx?cliptitle=4+Clash+good&filename=22/228946-a3ef5ba9-a1c2-403b-82d9-41bce0b4bc4e.mp3', 'http://www.soundboard.com/handler/DownLoadTrack.ashx?cliptitle=4+clash+2&filename=22/228946-07dd54bb-8cb1-4d20-ae85-87de335c1f56.mp3', 'http://www.soundboard.com/handler/DownLoadTrack.ashx?cliptitle=3+clash+1&filename=22/228946-c42aa303-0853-48ff-b827-d14953453493.mp3', 'http://www.soundboard.com/handler/DownLoadTrack.ashx?cliptitle=2+clash&filename=22/228946-d7bffcd7-133d-4d0e-9ebc-5ef7d8102f3a.mp3'];
-    saberRegEx = /saber/;
+    var saberRegEx = /saber/;
+    var lightningRegEx = /lightning/i;
     var saberOn = new Audio('http://www.soundboard.com/handler/DownLoadTrack.ashx?cliptitle=SaberOn&filename=22/228946-af74bc36-4d8c-46db-a096-262b7fa25761.mp3');
     var saberOn2 = new Audio ('http://www.soundboard.com/handler/DownLoadTrack.ashx?cliptitle=sw4-lightsabre&filename=22/228946-a71b9c11-1014-4959-8882-4d87088baeaa.mp3');
+    var forceLightningSound = new Audio("./assets/forceLightningSound.mp3")
     var playerBool = true;
     var enemyBool = true;
     $(".attackPanel").hide();
@@ -27,6 +29,8 @@ $(document).ready(function () {
                 if (saberRegEx.test($(this).text())) {
                     var randSaberNoise = new Audio(lightsaberNoises[Math.floor(Math.random() * lightsaberNoises.length)]);
                     randSaberNoise.play();
+                } else if (lightningRegEx.test($(this).text())) {
+                    forceLightningSound.play();
                 }
                 console.log($(this).text())
             });
@@ -35,6 +39,8 @@ $(document).ready(function () {
                 if (saberRegEx.test($(this).text())) {
                     var randSaberNoise = new Audio(lightsaberNoises[Math.floor(Math.random() * lightsaberNoises.length)]);
                     randSaberNoise.play();
+                } else if (lightningRegEx.test($(this).text())) {
+                    forceLightningSound.play();
                 }
                 console.log($(this).text())
             });
