@@ -11,4 +11,7 @@ main {
     /* grid-row: 1 / 2;
     grid-column: 1 / 6; */
 }
-
+.attackPanel {
+    border: solid 1px red;
+    width: 100px;
+}
