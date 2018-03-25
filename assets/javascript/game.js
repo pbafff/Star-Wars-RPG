@@ -26,6 +26,7 @@ $(document).ready(function () {
         if (playerBool === false && enemyBool === false) {
             $("#slot1").click(function () {
                 isAtkOrSpecial($(this).text());
+                pickEnemyMove();
                 if (saberRegEx.test($(this).text())) {
                     var randSaberNoise = new Audio(lightsaberNoises[Math.floor(Math.random() * lightsaberNoises.length)]);
                     randSaberNoise.play();
@@ -36,6 +37,7 @@ $(document).ready(function () {
             });
             $("#slot2").click(function () {
                 isAtkOrSpecial($(this).text());
+                pickEnemyMove();
                 if (saberRegEx.test($(this).text())) {
                     var randSaberNoise = new Audio(lightsaberNoises[Math.floor(Math.random() * lightsaberNoises.length)]);
                     randSaberNoise.play();
@@ -57,7 +59,7 @@ $(document).ready(function () {
             m1 = thiS.data('moves').move1;
             m2 = thiS.data('moves').move2;
             mArray.push(m1, m2);
-            pickEnemyMove();
+            
             thiS.children('p').html(thiS.data('hpValue'));
             enemyBool = false;
             $(".attackPanel").show(2500);
@@ -88,11 +90,11 @@ $(document).ready(function () {
         },
         forceFocus: {
             amount: 3,
-            type: "speed",
+            type: "speedmod",
             target: "self",
         },
         forceConfusion: {
-            amount: 3,
+            amount: -3,
             type: "speedmod",
             target: "opponent",
         },
@@ -108,7 +110,13 @@ $(document).ready(function () {
 
 
         } else if (gameMoves[move].type === "speedmod") {
+            speedModifier(move);
+        }
 
+        if (gameMoves[enemyMove].type === "attack") {
+            enemyDamageCalc(enemyMove);
+        } else if (gameMoves[enemyMove].type === "speedmod") {
+            speedModifier(gameMoves[enemyMove]);
         }
     }
 
@@ -121,11 +129,23 @@ $(document).ready(function () {
     }
 
     function whoGoesFirst() {
-
+        if (playerSpeed > enemySpeed) {
+            
+        }
     }
 
     function doesAtkHit() {
 
+    }
+
+    function speedModifier(move) {
+        if (gameMoves[move].target === "self") {
+            playerSpeed += gameMoves[move].amount;
+            console.log("player speed changed to " + playerSpeed);
+        } else if (gameMoves[move].target === "opponent") {
+            enemySpeed += gameMoves[move].amount;
+            console.log("enemy speed changed to " + enemySpeed);   
+        }
     }
 
 
