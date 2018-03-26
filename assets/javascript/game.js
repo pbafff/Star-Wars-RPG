@@ -5,7 +5,7 @@ $(document).ready(function () {
     var saberRegEx = /saber/;
     var lightningRegEx = /lightning/i;
     var saberOn = new Audio('http://www.soundboard.com/handler/DownLoadTrack.ashx?cliptitle=SaberOn&filename=22/228946-af74bc36-4d8c-46db-a096-262b7fa25761.mp3');
-    var saberOn2 = new Audio ('http://www.soundboard.com/handler/DownLoadTrack.ashx?cliptitle=sw4-lightsabre&filename=22/228946-a71b9c11-1014-4959-8882-4d87088baeaa.mp3');
+    var saberOn2 = new Audio('http://www.soundboard.com/handler/DownLoadTrack.ashx?cliptitle=sw4-lightsabre&filename=22/228946-a71b9c11-1014-4959-8882-4d87088baeaa.mp3');
     var forceLightningSound = new Audio("./assets/forceLightningSound.mp3")
     var playerBool = true;
     var enemyBool = true;
@@ -16,34 +16,36 @@ $(document).ready(function () {
             playerChar = thiS.attr('id');
             playerAtk = thiS.data('attack');
             playerSpeed = thiS.data('speed');
+            playerCurrentHP = thiS.data('hpValue');
             $("#slot1").html("<p>" + thiS.data('moves').move1 + "</p>").hide();
             $("#slot2").html("<p>" + thiS.data('moves').move2 + "</p>").hide();
             thiS.children('p').html(thiS.data('hpValue'));
             saberOn2.play();
             playerBool = false;
-            console.log(thiS.data('hpValue'));
         }
         if (playerBool === false && enemyBool === false) {
             $("#slot1").click(function () {
-                isAtkOrSpecial($(this).text());
                 pickEnemyMove();
-                if (saberRegEx.test($(this).text())) {
-                    var randSaberNoise = new Audio(lightsaberNoises[Math.floor(Math.random() * lightsaberNoises.length)]);
-                    randSaberNoise.play();
-                } else if (lightningRegEx.test($(this).text())) {
-                    forceLightningSound.play();
-                }
+                whoGoesFirst($(this).text());
+                console.log(enemyMove);
+                // if (saberRegEx.test($(this).text())) {
+                //     var randSaberNoise = new Audio(lightsaberNoises[Math.floor(Math.random() * lightsaberNoises.length)]);
+                //     randSaberNoise.play();
+                // } else if (lightningRegEx.test($(this).text())) {
+                //     forceLightningSound.play();
+                // }
                 console.log($(this).text())
             });
             $("#slot2").click(function () {
-                isAtkOrSpecial($(this).text());
                 pickEnemyMove();
-                if (saberRegEx.test($(this).text())) {
-                    var randSaberNoise = new Audio(lightsaberNoises[Math.floor(Math.random() * lightsaberNoises.length)]);
-                    randSaberNoise.play();
-                } else if (lightningRegEx.test($(this).text())) {
-                    forceLightningSound.play();
-                }
+                whoGoesFirst($(this).text());
+                console.log(enemyMove);
+                // if (saberRegEx.test($(this).text())) {
+                //     var randSaberNoise = new Audio(lightsaberNoises[Math.floor(Math.random() * lightsaberNoises.length)]);
+                //     randSaberNoise.play();
+                // } else if (lightningRegEx.test($(this).text())) {
+                //     forceLightningSound.play();
+                // }
                 console.log($(this).text())
             });
         }
@@ -56,10 +58,11 @@ $(document).ready(function () {
             enemyChar = thiS.attr('id');
             enemyAtk = thiS.data('attack');
             enemySpeed = thiS.data('speed');
+            enemyCurrentHP = thiS.data('hpValue');
             m1 = thiS.data('moves').move1;
             m2 = thiS.data('moves').move2;
             mArray.push(m1, m2);
-            
+
             thiS.children('p').html(thiS.data('hpValue'));
             enemyBool = false;
             $(".attackPanel").show(2500);
@@ -68,7 +71,6 @@ $(document).ready(function () {
             fates = new Audio("https://archive.org/download/StarWarsJohnWilliamsDuelOfTheFates_201601/Star%20Wars%20-%20John%20Williams%20-%20Duel%20Of%20The%20Fates.mp3");
             saberOn.play();
             fates.play();
-            console.log(thiS.data('hpValue'));
         }
     });
 
@@ -100,24 +102,24 @@ $(document).ready(function () {
         },
 
     };
-    function pickEnemyMove() { 
+    function pickEnemyMove() {
         enemyMove = mArray[Math.floor(Math.random() * mArray.length)];
     };
 
     function isAtkOrSpecial(move) {
-        if (gameMoves[move].type === "attack") {
-            playerDamageCalc(move);
+        // if (gameMoves[move].type === "attack") {
+        //     playerDamageCalc(move);
 
 
-        } else if (gameMoves[move].type === "speedmod") {
-            speedModifier(move);
-        }
+        // } else if (gameMoves[move].type === "speedmod") {
+        //     speedModifier(move);
+        // }
 
-        if (gameMoves[enemyMove].type === "attack") {
-            enemyDamageCalc(enemyMove);
-        } else if (gameMoves[enemyMove].type === "speedmod") {
-            speedModifier(gameMoves[enemyMove]);
-        }
+        // if (gameMoves[enemyMove].type === "attack") {
+        //     enemyDamageCalc(enemyMove);
+        // } else if (gameMoves[enemyMove].type === "speedmod") {
+        //     speedModifier(gameMoves[enemyMove]);
+        // }
     }
 
     function playerDamageCalc(move) {
@@ -128,10 +130,40 @@ $(document).ready(function () {
         return gameMoves[move].damage * enemyAtk;
     }
 
-    function whoGoesFirst() {
+    function whoGoesFirst(move) {
         if (playerSpeed > enemySpeed) {
-            if () {
-                
+            if (gameMoves[move].type === "attack") {
+                var playerDamage = playerDamageCalc(move);
+                enemyCurrentHP -= playerDamage;
+                $("#" + enemyChar).children('p').html(enemyCurrentHP);
+                setTimeout(() => {
+                    var enemyDamage = enemyDamageCalc(enemyMove);
+                    playerCurrentHP -= enemyDamage;
+                    $("#" + playerChar).children('p').html(playerCurrentHP);
+                    console.log(enemyCurrentHP);
+                    console.log(playerCurrentHP);
+                }, 2000);
+
+
+            } else if (gameMoves[move].type === "speedmod") {
+                speedModifier(move);
+            }
+        }
+        if (enemySpeed > playerSpeed) {
+            if (gameMoves[enemyMove].type === "attack") {
+                var enemyDamage = enemyDamageCalc(enemyMove);
+                playerCurrentHP -= enemyDamage;
+                $("#" + playerChar).children('p').html(playerCurrentHP);
+                setTimeout(() => {
+                    var playerDamage = playerDamageCalc(move);
+                    enemyCurrentHP -= playerDamage;
+                    $("#" + enemyChar).children('p').html(enemyCurrentHP);
+                    console.log(enemyCurrentHP);
+                    console.log(playerCurrentHP);
+                }, 2000);
+
+            } else if (gameMoves[enemyMove].type === "speedmod") {
+                speedModifier(enemyMove);
             }
         }
     }
@@ -142,15 +174,17 @@ $(document).ready(function () {
 
     function speedModifier(move) {
         if (gameMoves[move].target === "self") {
-            playerSpeed += gameMoves[move].amount;
+            $() += gameMoves[move].amount;
             console.log("player speed changed to " + playerSpeed);
         } else if (gameMoves[move].target === "opponent") {
             enemySpeed += gameMoves[move].amount;
-            console.log("enemy speed changed to " + enemySpeed);   
+            console.log("enemy speed changed to " + enemySpeed);
         }
     }
 
+    function blah() {
 
+    }
 
 
 
