@@ -28,24 +28,24 @@ $(document).ready(function () {
                 pickEnemyMove();
                 whoGoesFirst($(this).text());
                 console.log(enemyMove);
-                // if (saberRegEx.test($(this).text())) {
-                //     var randSaberNoise = new Audio(lightsaberNoises[Math.floor(Math.random() * lightsaberNoises.length)]);
-                //     randSaberNoise.play();
-                // } else if (lightningRegEx.test($(this).text())) {
-                //     forceLightningSound.play();
-                // }
+                if (saberRegEx.test($(this).text())) {
+                    var randSaberNoise = new Audio(lightsaberNoises[Math.floor(Math.random() * lightsaberNoises.length)]);
+                    randSaberNoise.play();
+                } else if (lightningRegEx.test($(this).text())) {
+                    forceLightningSound.play();
+                }
                 console.log($(this).text())
             });
             $("#slot2").click(function () {
                 pickEnemyMove();
                 whoGoesFirst($(this).text());
                 console.log(enemyMove);
-                // if (saberRegEx.test($(this).text())) {
-                //     var randSaberNoise = new Audio(lightsaberNoises[Math.floor(Math.random() * lightsaberNoises.length)]);
-                //     randSaberNoise.play();
-                // } else if (lightningRegEx.test($(this).text())) {
-                //     forceLightningSound.play();
-                // }
+                if (saberRegEx.test($(this).text())) {
+                    var randSaberNoise = new Audio(lightsaberNoises[Math.floor(Math.random() * lightsaberNoises.length)]);
+                    randSaberNoise.play();
+                } else if (lightningRegEx.test($(this).text())) {
+                    forceLightningSound.play();
+                }
                 console.log($(this).text())
             });
         }
