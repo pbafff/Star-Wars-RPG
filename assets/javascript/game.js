@@ -26,27 +26,27 @@ $(document).ready(function () {
         if (playerBool === false && enemyBool === false) {
             $("#slot1").click(function () {
                 pickEnemyMove();
-                whoGoesFirst($(this).text());
-                console.log(enemyMove);
+                whoGoesFirst($(this).text(), "player");
+                console.log("enemy move: " + enemyMove);
                 if (saberRegEx.test($(this).text())) {
                     var randSaberNoise = new Audio(lightsaberNoises[Math.floor(Math.random() * lightsaberNoises.length)]);
                     randSaberNoise.play();
                 } else if (lightningRegEx.test($(this).text())) {
                     forceLightningSound.play();
                 }
-                console.log($(this).text())
+                console.log("player move: " + $(this).text())
             });
             $("#slot2").click(function () {
                 pickEnemyMove();
-                whoGoesFirst($(this).text());
-                console.log(enemyMove);
+                whoGoesFirst($(this).text(), "player");
+                console.log("enemy move:" + enemyMove);
                 if (saberRegEx.test($(this).text())) {
                     var randSaberNoise = new Audio(lightsaberNoises[Math.floor(Math.random() * lightsaberNoises.length)]);
                     randSaberNoise.play();
                 } else if (lightningRegEx.test($(this).text())) {
                     forceLightningSound.play();
                 }
-                console.log($(this).text())
+                console.log("player move: " + $(this).text())
             });
         }
     });
@@ -104,6 +104,7 @@ $(document).ready(function () {
     };
     function pickEnemyMove() {
         enemyMove = mArray[Math.floor(Math.random() * mArray.length)];
+
     };
 
     function isAtkOrSpecial(move) {
@@ -130,7 +131,7 @@ $(document).ready(function () {
         return gameMoves[move].damage * enemyAtk;
     }
 
-    function whoGoesFirst(move) {
+    function whoGoesFirst(move, identity) {
         if (playerSpeed > enemySpeed) {
             if (gameMoves[move].type === "attack") {
                 var playerDamage = playerDamageCalc(move);
@@ -146,7 +147,7 @@ $(document).ready(function () {
 
 
             } else if (gameMoves[move].type === "speedmod") {
-                speedModifier(move);
+                speedModifier(move, identity);
             }
         }
         if (enemySpeed > playerSpeed) {
@@ -163,7 +164,7 @@ $(document).ready(function () {
                 }, 2000);
 
             } else if (gameMoves[enemyMove].type === "speedmod") {
-                speedModifier(enemyMove);
+                speedModifier(enemyMove, "enemy");
             }
         }
     }
@@ -172,13 +173,20 @@ $(document).ready(function () {
 
     }
 
-    function speedModifier(move) {
-        if (gameMoves[move].target === "self") {
-            $() += gameMoves[move].amount;
+    function speedModifier(move, identity) {
+        console.log("speedmod identity: " + identity)
+        if (gameMoves[move].target === "self" && identity === "player") {
+            playerSpeed += gameMoves[move].amount;
             console.log("player speed changed to " + playerSpeed);
-        } else if (gameMoves[move].target === "opponent") {
+        } else if (gameMoves[move].target === "self" && identity !== "player") {
             enemySpeed += gameMoves[move].amount;
             console.log("enemy speed changed to " + enemySpeed);
+        } else if (gameMoves[move].target === "opponent" && identity === "player") {
+            enemySpeed += gameMoves[move].amount;
+            console.log("enemy speed changed to " + enemySpeed);
+        } else if (gameMoves[move].target === "opponent" && identity !== "player") {
+            playerSpeed += gameMoves[move].amount;
+            console.log("player speed changed to " + playerSpeed);
         }
     }
 
