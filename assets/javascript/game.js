@@ -197,7 +197,7 @@ $(document).ready(function () {
                         $("#" + enemyChar).children('p').html(enemyCurrentHP);
                     }, 800);
                     setTimeout(() => { //and apply enemy speedmod
-                        speedModifier(move, "enemy");
+                        speedModifier(enemyMove, "enemy");
                     }, 1200);
                 }
             } else if (gameMoves[move].type === "speedmod" && gameMoves[enemyMove].type === "speedmod") {
@@ -309,13 +309,13 @@ $(document).ready(function () {
         if (gameMoves[move].target === "self" && identity === "player") {
             playerSpeed += gameMoves[move].amount;
             console.log("player speed changed to " + playerSpeed);
-        } else if (gameMoves[move].target === "self" && identity !== "player") {
+        } else if (gameMoves[move].target === "self" && identity === "enemy") {
             enemySpeed += gameMoves[move].amount;
             console.log("enemy speed changed to " + enemySpeed);
         } else if (gameMoves[move].target === "opponent" && identity === "player") {
             enemySpeed += gameMoves[move].amount;
             console.log("enemy speed changed to " + enemySpeed);
-        } else if (gameMoves[move].target === "opponent" && identity !== "player") {
+        } else if (gameMoves[move].target === "opponent" && identity === "enemy") {
             playerSpeed += gameMoves[move].amount;
             console.log("player speed changed to " + playerSpeed);
         }
