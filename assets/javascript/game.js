@@ -139,7 +139,7 @@ $(document).ready(function () {
                 var playerDamage = playerDamageCalc(move);
                 enemyCurrentHP -= playerDamage;
 
-                if (enemyCurrentHP == 0) { //check if enemy is dead 
+                if (enemyCurrentHP <= 0) { //check if enemy is dead 
                     $("#" + enemyChar).children('p').html(0);
                     setTimeout(() => {
                         $("#" + enemyChar).html("<h2> You have defeated " + enemyChar + "! </h2>");
@@ -149,7 +149,7 @@ $(document).ready(function () {
                         enemyBool = true;
 
                     }, 3000);
-                    break;
+                    
                 } else { //if not dead apply damage to enemy...
                     setTimeout(() => {
                         $("#" + enemyChar).children('p').html(enemyCurrentHP);
@@ -159,7 +159,7 @@ $(document).ready(function () {
                         var enemyDamage = enemyDamageCalc(enemyMove);
                         playerCurrentHP -= enemyDamage;
                         $("#" + playerChar).children('p').html(playerCurrentHP);
-                        if (playerCurrentHP == 0) { //check if player is dead
+                        if (playerCurrentHP <= 0) { //check if player is dead
                             $("#" + playerChar).html("You died!");
                             return;
                         }
@@ -172,7 +172,7 @@ $(document).ready(function () {
                     var enemyDamage = enemyDamageCalc(enemyMove);
                     playerCurrentHP -= enemyDamage;
                     $("#" + playerChar).children('p').html(playerCurrentHP);
-                    if (playerCurrentHP == 0) {
+                    if (playerCurrentHP <= 0) {
                         $("#" + playerChar).html("You died!");
                         return;
                     }
@@ -181,7 +181,7 @@ $(document).ready(function () {
             } else if (gameMoves[move].type === "attack" && gameMoves[enemyMove].type === "speedmod") {
                 var playerDamage = playerDamageCalc(move);
                 enemyCurrentHP -= playerDamage;
-                if (enemyCurrentHP == 0) { //check if enemy is dead 
+                if (enemyCurrentHP <= 0) { //check if enemy is dead 
                     $("#" + enemyChar).children('p').html(0);
                     setTimeout(() => {
                         $("#" + enemyChar).html("<h2> You have defeated " + enemyChar + "! </h2>");
@@ -191,7 +191,7 @@ $(document).ready(function () {
                         enemyBool = true;
 
                     }, 3000);
-                    break;
+                    
                 } else { //if not dead apply damage to enemy...
                     setTimeout(() => {
                         $("#" + enemyChar).children('p').html(enemyCurrentHP);
@@ -213,7 +213,7 @@ $(document).ready(function () {
                 var enemyDamage = enemyDamageCalc(enemyMove);
                 playerCurrentHP -= enemyDamage;
 
-                if (playerCurrentHP == 0) { //check if player is dead
+                if (playerCurrentHP <= 0) { //check if player is dead
                     $("#" + playerChar).children('p').html(0);
                     setTimeout(() => {
                         $("#" + playerChar).html("You died!");
@@ -228,7 +228,7 @@ $(document).ready(function () {
                         var playerDamage = playerDamageCalc(move);
                         enemyCurrentHP -= playerDamage;
 
-                        if (enemyCurrentHP == 0) { //check if enemy is dead 
+                        if (enemyCurrentHP <= 0) { //check if enemy is dead 
                             $("#" + enemyChar).children('p').html(0);
                             setTimeout(() => {
                                 $("#" + enemyChar).html("<h2> You have defeated " + enemyChar + "! </h2>");
@@ -238,7 +238,7 @@ $(document).ready(function () {
                                 enemyBool = true;
 
                             }, 3000);
-                            break;
+                            
                         } else {
                             $("#" + enemyChar).children('p').html(enemyCurrentHP);
                         }
@@ -251,7 +251,7 @@ $(document).ready(function () {
                     var playerDamage = playerDamageCalc(move);
                     enemyCurrentHP -= playerDamage;
 
-                    if (enemyCurrentHP == 0) { //check if enemy is dead 
+                    if (enemyCurrentHP <= 0) { //check if enemy is dead 
                         $("#" + enemyChar).children('p').html(0);
                         setTimeout(() => {
                             $("#" + enemyChar).html("<h2> You have defeated " + enemyChar + "! </h2>");
@@ -261,7 +261,7 @@ $(document).ready(function () {
                             enemyBool = true;
 
                         }, 3000);
-                        break;
+                        
                     } else {
                         $("#" + enemyChar).children('p').html(enemyCurrentHP);
                     }
@@ -270,7 +270,7 @@ $(document).ready(function () {
             } else if (gameMoves[enemyMove].type === "attack" && gameMoves[move].type === "speedmod") {
                 var enemyDamage = enemyDamageCalc(enemyMove);
                 playerCurrentHP -= enemyDamage;
-                if (playerCurrentHP == 0) { //check if player is dead
+                if (playerCurrentHP <= 0) { //check if player is dead
                     $("#" + playerChar).children('p').html(0);
                     setTimeout(() => {
                         $("#" + playerChar).html("You died!");
