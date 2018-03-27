@@ -77,28 +77,30 @@ $(document).ready(function () {
     var gameMoves = {
         saberStrike: {
             damage: 10,
-            accuracy: 1,
+            accuracy: 0.95,
             type: "attack",
         },
         saberThrow: {
             damage: 11,
-            accuracy: 0.7,
+            accuracy: 0.8,
             type: "attack",
         },
         forceLightning: {
             damage: 12,
-            accuracy: 0.8,
+            accuracy: 0.7,
             type: "attack",
         },
         forceFocus: {
             amount: 3,
             type: "speedmod",
             target: "self",
+            accuracy: 1,
         },
         forceConfusion: {
             amount: -3,
             type: "speedmod",
             target: "opponent",
+            accuracy: 0.8,
         },
 
     };
@@ -170,7 +172,13 @@ $(document).ready(function () {
     }
 
     function doesAtkHit() {
-
+        var d = Math.random();
+        if (d < gameMoves[move].accuracy) {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     function speedModifier(move, identity) {
