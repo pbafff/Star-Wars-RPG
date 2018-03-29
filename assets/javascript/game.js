@@ -117,7 +117,7 @@ $(document).ready(function () {
             $("#" + playerChar).append("<p id=playerMissed> Your move missed! </p>");
             setTimeout(() => {
                 $("#playerMissed").remove();
-            }, 1000);
+            }, 1500);
             return 0;
         }
     }
@@ -127,10 +127,10 @@ $(document).ready(function () {
         if (d < gameMoves[move].accuracy) {
             return gameMoves[move].damage * enemyAtk;
         } else {
-            $("#" + enemyChar).append("<p id=enemyMissed> Your move missed! </p>");
+            $("#" + enemyChar).append("<p id=enemyMissed>" + enemyChar +  "'s move missed! </p>");
             setTimeout(() => {
                 $("#enemyMissed").remove();
-            }, 1000);
+            }, 1500);
             return 0;
         }
     }
