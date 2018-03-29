@@ -109,28 +109,30 @@ $(document).ready(function () {
 
     };
 
-    function isAtkOrSpecial(move) {
-        // if (gameMoves[move].type === "attack") {
-        //     playerDamageCalc(move);
-
-
-        // } else if (gameMoves[move].type === "speedmod") {
-        //     speedModifier(move);
-        // }
-
-        // if (gameMoves[enemyMove].type === "attack") {
-        //     enemyDamageCalc(enemyMove);
-        // } else if (gameMoves[enemyMove].type === "speedmod") {
-        //     speedModifier(gameMoves[enemyMove]);
-        // }
-    }
-
     function playerDamageCalc(move) {
-        return gameMoves[move].damage * playerAtk;
+        var d = Math.random();
+        if (d < gameMoves[move].accuracy) {
+            return gameMoves[move].damage * playerAtk;
+        } else {
+            $("#" + playerChar).append("<p id=playerMissed> Your move missed! </p>");
+            setTimeout(() => {
+                $("#playerMissed").remove();
+            }, 1000);
+            return 0;
+        }
     }
 
     function enemyDamageCalc(move) {
-        return gameMoves[move].damage * enemyAtk;
+        var d = Math.random();
+        if (d < gameMoves[move].accuracy) {
+            return gameMoves[move].damage * enemyAtk;
+        } else {
+            $("#" + enemyChar).append("<p id=enemyMissed> Your move missed! </p>");
+            setTimeout(() => {
+                $("#enemyMissed").remove();
+            }, 1000);
+            return 0;
+        }
     }
 
     function whoGoesFirst(move) {
@@ -149,7 +151,7 @@ $(document).ready(function () {
                         enemyBool = true;
 
                     }, 3000);
-                    
+
                 } else { //if not dead apply damage to enemy...
                     setTimeout(() => {
                         $("#" + enemyChar).children('p').html(enemyCurrentHP);
@@ -191,7 +193,7 @@ $(document).ready(function () {
                         enemyBool = true;
 
                     }, 3000);
-                    
+
                 } else { //if not dead apply damage to enemy...
                     setTimeout(() => {
                         $("#" + enemyChar).children('p').html(enemyCurrentHP);
@@ -207,7 +209,7 @@ $(document).ready(function () {
                 }, 1000);
             }
         }
-//----------------------------------------------------------------------------------------------------------------
+        //----------------------------------------------------------------------------------------------------------------
         if (enemySpeed > playerSpeed) {
             if (gameMoves[enemyMove].type === "attack" && gameMoves[move].type === "attack") {
                 var enemyDamage = enemyDamageCalc(enemyMove);
@@ -238,7 +240,7 @@ $(document).ready(function () {
                                 enemyBool = true;
 
                             }, 3000);
-                            
+
                         } else {
                             $("#" + enemyChar).children('p').html(enemyCurrentHP);
                         }
@@ -261,7 +263,7 @@ $(document).ready(function () {
                             enemyBool = true;
 
                         }, 3000);
-                        
+
                     } else {
                         $("#" + enemyChar).children('p').html(enemyCurrentHP);
                     }
@@ -293,17 +295,6 @@ $(document).ready(function () {
         }
     }
 
-
-    function doesAtkHit() {
-        var d = Math.random();
-        if (d < gameMoves[move].accuracy) {
-            return true;
-        }
-        else {
-            return false;
-        }
-    }
-
     function speedModifier(move, identity) {
         console.log("speedmod identity: " + identity)
         if (gameMoves[move].target === "self" && identity === "player") {
@@ -320,14 +311,6 @@ $(document).ready(function () {
             console.log("player speed changed to " + playerSpeed);
         }
     }
-
-    function blah() {
-
-    }
-
-
-
-
 
 
 }); 
